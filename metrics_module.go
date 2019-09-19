@@ -36,12 +36,13 @@ func getMetricsSFCC(query []string) []byte {
 }
 
 func metricsToByte(metrics []Metrics) []byte {
-	var resp string
+	var resp, respTotal, respEnable, respDisable string
 
 	for _, metric := range metrics {
-		resp += fmt.Sprintf("%s\n%s\n%s{site=\"%s\"} %v\n", helpPromoTotal, typePromoTotal, namePromoTotal, metric.Site, metric.PromotionEnabled+metric.PromotionDisabled)
-		resp += fmt.Sprintf("%s\n%s\n%s{site=\"%s\"} %v\n", helpPromoEnable, typePromoEnable, namePromoEnable, metric.Site, metric.PromotionEnabled)
-		resp += fmt.Sprintf("%s\n%s\n%s{site=\"%s\"} %v\n", helpPromoDisable, typePromoDisable, namePromoDisable, metric.Site, metric.PromotionDisabled)
+		respTotal += fmt.Sprintf("%s{site=\"%s\"} %v\n", namePromoTotal, metric.Site, metric.PromotionEnabled+metric.PromotionDisabled)
+		respEnable += fmt.Sprintf("%s{site=\"%s\"} %v\n", namePromoEnable, metric.Site, metric.PromotionEnabled)
+		respDisable += fmt.Sprintf("%s{site=\"%s\"} %v\n", namePromoDisable, metric.Site, metric.PromotionDisabled)
 	}
+	resp = fmt.Sprintf("%s\n%s\n%s%s\n%s\n%s%s\n%s\n%s", helpPromoTotal, typePromoTotal, respTotal, helpPromoEnable, typePromoEnable, respEnable, helpPromoDisable, typePromoDisable, respDisable)
 	return []byte(resp)
 }
