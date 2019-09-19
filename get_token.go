@@ -33,7 +33,7 @@ func askToken(clientID string, clientPW string) string {
 	key := base64.StdEncoding.EncodeToString([]byte(clientID + ":" + clientPW))
 	query := fmt.Sprintf("https://account.demandware.com/dwsso/oauth2/access_token?grant_type=client_credentials")
 	req, err := http.NewRequest("POST", query, nil)
-	req.Header.Add("Authorization", "Basic " + key)
+	req.Header.Add("Authorization", "Basic "+key)
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	resp, err := client.Do(req)
 	if err != nil {
@@ -43,7 +43,6 @@ func askToken(clientID string, clientPW string) string {
 
 	defer resp.Body.Close()
 	buf, _ := ioutil.ReadAll(resp.Body)
-
 
 	var token Token
 	json.Unmarshal(buf, &token)

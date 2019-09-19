@@ -1,14 +1,14 @@
 package main
 
 const (
-	namePromo      = "sfcc_promotion"
-	namePromoTrue  = namePromo + "_true"
-	namePromoFalse = namePromo + "_false"
-	namePromoTotal = namePromo + "_total"
-	helpPromoTrue  = "# HELP " + namePromoTrue + ""
-	typePromoTrue  = "# TYPE " + namePromoTrue + " gauge"
-	helpPromoFalse = "# HELP " + namePromoFalse + ""
-	typePromoFalse = "# TYPE " + namePromoFalse + " gauge"
-	helpPromoTotal = "# HELP " + namePromoTotal + ""
-	typePromoTotal = "# TYPE " + namePromoTotal + " gauge"
+	namePromo        = "sfcc_promotions"
+	namePromoEnable  = namePromo + "_enabled"
+	namePromoDisable = namePromo + "_disabled"
+	namePromoTotal   = namePromo + "_total"
+	helpPromoEnable  = "# HELP " + namePromoEnable + " Number of promotion enabled"
+	typePromoEnable  = "# TYPE " + namePromoEnable + " gauge"
+	helpPromoDisable = "# HELP " + namePromoDisable + " Number of promotion disabled"
+	typePromoDisable = "# TYPE " + namePromoDisable + " gauge"
+	helpPromoTotal   = "# HELP " + namePromoTotal + " Total number of promotion"
+	typePromoTotal   = "# TYPE " + namePromoTotal + " gauge"
 )

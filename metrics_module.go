@@ -39,9 +39,9 @@ func metricsToByte(metrics []Metrics) []byte {
 	var resp string
 
 	for _, metric := range metrics {
-		resp += fmt.Sprintf("%s\n%s\n%s{site=\"%s\"} %v\n", helpPromoTrue, typePromoTrue, namePromoTrue, metric.Site, metric.PromotionEnabled)
-		resp += fmt.Sprintf("%s\n%s\n%s{site=\"%s\"} %v\n", helpPromoFalse, typePromoFalse, namePromoFalse, metric.Site, metric.PromotionDisabled)
 		resp += fmt.Sprintf("%s\n%s\n%s{site=\"%s\"} %v\n", helpPromoTotal, typePromoTotal, namePromoTotal, metric.Site, metric.PromotionEnabled+metric.PromotionDisabled)
+		resp += fmt.Sprintf("%s\n%s\n%s{site=\"%s\"} %v\n", helpPromoEnable, typePromoEnable, namePromoEnable, metric.Site, metric.PromotionEnabled)
+		resp += fmt.Sprintf("%s\n%s\n%s{site=\"%s\"} %v\n", helpPromoDisable, typePromoDisable, namePromoDisable, metric.Site, metric.PromotionDisabled)
 	}
 	return []byte(resp)
 }

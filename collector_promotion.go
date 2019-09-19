@@ -3,10 +3,10 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"fmt"
 )
 
 type Scan struct {
@@ -15,7 +15,6 @@ type Scan struct {
 
 func getPromoMetrics(target string, token string) (Metrics, error) {
 	var metric Metrics
-
 
 	bufTrue, err := getPromoJSON(target, token, "true")
 	if err != nil {
@@ -41,7 +40,7 @@ func getPromoJSON(target string, token string, search string) ([]byte, error) {
 	jsonBody := []byte(jsBody)
 	query := fmt.Sprintf("https://store-dev.ubi.com/s/-/dw/data/v19_8/sites/%s/promotion_search", target)
 	req, err := http.NewRequest("POST", query, bytes.NewBuffer(jsonBody))
-	req.Header.Add("Authorization", "Bearer " + token)
+	req.Header.Add("Authorization", "Bearer "+token)
 	req.Header.Add("Content-Type", "application/json")
 	resp, err := client.Do(req)
 	if err != nil {
