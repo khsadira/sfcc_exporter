@@ -7,10 +7,14 @@ import (
 func fillMetrics(target string, token string) Metrics {
 	var metric Metrics
 
-	metric, err := getPromoMetrics(target, token)
-	metric.Site = target
+	metric, err := getPromoMetrics(metric, target, token)
 	if err != nil {
 		log.Println(err)
 	}
+	metric, err = getCouponMetrics(metric, target, token)
+	if err != nil {
+		log.Println(err)
+	}
+	metric.Site = target
 	return metric
 }

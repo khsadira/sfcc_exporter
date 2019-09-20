@@ -5,4 +5,11 @@ type Metrics struct {
 	PromotionEnabled  int
 	PromotionDisabled int
 	PromotionTotal    int
+	CouponEnabled     int
+	CouponDisabled    int
+	CouponTotal       int
+}
+
+type Scan struct {
+	Total int `json:"total"`
 }

@@ -9,7 +9,8 @@ FILE	=	main.go\
 			const_var.go\
 			type_struct.go\
 			collector_promotion.go\
-			get_token.go
+			get_token.go\
+			collector_coupon.go
 
 DOCKER_IMAGE_NAME       ?= sfcc_exporter
 
