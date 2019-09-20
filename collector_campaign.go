@@ -9,31 +9,31 @@ import (
 	"net/http"
 )
 
-func getPromoMetrics(metric Metrics, target string, token string) (Metrics, error) {
+func getCampaignMetrics(metric Metrics, target string, token string) (Metrics, error) {
 
-	bufTrue, err := getPromoJSON(target, token, "true")
+	bufTrue, err := getCampaignJSON(target, token, "true")
 	if err != nil {
 		return metric, err
 	}
-	bufFalse, err := getPromoJSON(target, token, "false")
+	bufFalse, err := getCampaignJSON(target, token, "false")
 	if err != nil {
 		return metric, err
 	}
 	var scan Scan
 
 	json.Unmarshal(bufTrue, &scan)
-	metric.PromotionEnable = scan.Total
+	metric.CampaignEnable = scan.Total
 
 	json.Unmarshal(bufFalse, &scan)
-	metric.PromotionDisable = scan.Total
+	metric.CampaignDisable = scan.Total
 	return metric, nil
 }
 
-func getPromoJSON(target string, token string, search string) ([]byte, error) {
+func getCampaignJSON(target string, token string, search string) ([]byte, error) {
 	client := &http.Client{}
 	jsBody := fmt.Sprintf(`{"query":{"text_query":{"fields":["enabled"],"search_phrase":"%s"}},"select" : "(**)"}`, search)
 	jsonBody := []byte(jsBody)
-	query := fmt.Sprintf("https://store-dev.ubi.com/s/-/dw/data/v19_8/sites/%s/promotion_search", target)
+	query := fmt.Sprintf("https://store-dev.ubi.com/s/-/dw/data/v19_8/sites/%s/campaign_search", target)
 	req, err := http.NewRequest("POST", query, bytes.NewBuffer(jsonBody))
 	req.Header.Add("Authorization", "Bearer "+token)
 	req.Header.Add("Content-Type", "application/json")

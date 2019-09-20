@@ -15,6 +15,10 @@ func fillMetrics(target string, token string) Metrics {
 	if err != nil {
 		log.Println(err)
 	}
+	metric, err = getCampaignMetrics(metric, target, token)
+	if err != nil {
+		log.Println(err)
+	}
 	metric.Site = target
 	return metric
 }

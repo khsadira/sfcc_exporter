@@ -22,10 +22,10 @@ func getCouponMetrics(metric Metrics, target string, token string) (Metrics, err
 	var scan Scan
 
 	json.Unmarshal(bufTrue, &scan)
-	metric.CouponEnabled = scan.Total
+	metric.CouponEnable = scan.Total
 
 	json.Unmarshal(bufFalse, &scan)
-	metric.CouponDisabled = scan.Total
+	metric.CouponDisable = scan.Total
 	return metric, nil
 }
 

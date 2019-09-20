@@ -1,13 +1,13 @@
 package main
 
 type Metrics struct {
-	Site              string
-	PromotionEnabled  int
-	PromotionDisabled int
-	PromotionTotal    int
-	CouponEnabled     int
-	CouponDisabled    int
-	CouponTotal       int
+	Site             string
+	PromotionEnable  int
+	PromotionDisable int
+	CouponEnable     int
+	CouponDisable    int
+	CampaignEnable   int
+	CampaignDisable  int
 }
 
 type Scan struct {

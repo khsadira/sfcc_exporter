@@ -24,4 +24,16 @@ const (
 	typeCouponDisable = "# TYPE " + nameCouponDisable + " gauge"
 	helpCouponTotal   = "# HELP " + nameCouponTotal + " Total number of coupons"
 	typeCouponTotal   = "# TYPE " + nameCouponTotal + " gauge"
+
+	//CAMPAIGN VAR
+	nameCampaign        = "sfcc_campaigns"
+	nameCampaignEnable  = nameCampaign + "_enabled"
+	nameCampaignDisable = nameCampaign + "_disabled"
+	nameCampaignTotal   = nameCampaign + "_total"
+	helpCampaignEnable  = "# HELP " + nameCampaignEnable + " Number of campaigns enabled"
+	typeCampaignEnable  = "# TYPE " + nameCampaignEnable + " gauge"
+	helpCampaignDisable = "# HELP " + nameCampaignDisable + " Number of campaigns disabled"
+	typeCampaignDisable = "# TYPE " + nameCampaignDisable + " gauge"
+	helpCampaignTotal   = "# HELP " + nameCampaignTotal + " Total number of campaigns"
+	typeCampaignTotal   = "# TYPE " + nameCampaignTotal + " gauge"
 )

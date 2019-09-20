@@ -39,19 +39,26 @@ func metricsToByte(metrics []Metrics) []byte {
 	var resp string
 	var promoTotal, promoEnable, promoDisable string
 	var couponTotal, couponEnable, couponDisable string
+	var campaignTotal, campaignEnable, campaignDisable string
 
 	for _, metric := range metrics {
 		//PROMO_VAR
-		promoTotal += fmt.Sprintf("%s{site=\"%s\"} %v\n", namePromoTotal, metric.Site, metric.PromotionEnabled+metric.PromotionDisabled)
-		promoEnable += fmt.Sprintf("%s{site=\"%s\"} %v\n", namePromoEnable, metric.Site, metric.PromotionEnabled)
-		promoDisable += fmt.Sprintf("%s{site=\"%s\"} %v\n", namePromoDisable, metric.Site, metric.PromotionDisabled)
+		promoTotal += fmt.Sprintf("%s{site=\"%s\"} %v\n", namePromoTotal, metric.Site, metric.PromotionEnable+metric.PromotionDisable)
+		promoEnable += fmt.Sprintf("%s{site=\"%s\"} %v\n", namePromoEnable, metric.Site, metric.PromotionEnable)
+		promoDisable += fmt.Sprintf("%s{site=\"%s\"} %v\n", namePromoDisable, metric.Site, metric.PromotionDisable)
 
 		//COUPON_VAR
-		couponTotal += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameCouponTotal, metric.Site, metric.CouponEnabled+metric.CouponDisabled)
-		couponEnable += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameCouponEnable, metric.Site, metric.CouponEnabled)
-		couponDisable += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameCouponDisable, metric.Site, metric.CouponDisabled)
+		couponTotal += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameCouponTotal, metric.Site, metric.CouponEnable+metric.CouponDisable)
+		couponEnable += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameCouponEnable, metric.Site, metric.CouponEnable)
+		couponDisable += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameCouponDisable, metric.Site, metric.CouponDisable)
+
+		//CAMPAIGN_VAR
+		campaignTotal += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameCampaignTotal, metric.Site, metric.CampaignEnable+metric.CampaignDisable)
+		campaignEnable += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameCampaignEnable, metric.Site, metric.CampaignEnable)
+		campaignDisable += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameCampaignDisable, metric.Site, metric.CampaignDisable)
 	}
 	resp = fmt.Sprintf("%s\n%s\n%s%s\n%s\n%s%s\n%s\n%s", helpPromoTotal, typePromoTotal, promoTotal, helpPromoEnable, typePromoEnable, promoEnable, helpPromoDisable, typePromoDisable, promoDisable)
 	resp += fmt.Sprintf("%s\n%s\n%s%s\n%s\n%s%s\n%s\n%s", helpCouponTotal, typeCouponTotal, couponTotal, helpCouponEnable, typeCouponEnable, couponEnable, helpCouponDisable, typeCouponDisable, couponDisable)
+	resp += fmt.Sprintf("%s\n%s\n%s%s\n%s\n%s%s\n%s\n%s", helpCampaignTotal, typeCampaignTotal, campaignTotal, helpCampaignEnable, typeCampaignEnable, campaignEnable, helpCampaignDisable, typeCampaignDisable, campaignDisable)
 	return []byte(resp)
 }
