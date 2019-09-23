@@ -1,23 +1,15 @@
 package main
 
-import (
-	"log"
-)
-
 func fillMetrics(target string, token string) Metrics {
 	var metric Metrics
 
-	metric, err := getPromoMetrics(metric, target, token)
-	if err != nil {
-		log.Println(err)
-	}
-	metric, err = getCouponMetrics(metric, target, token)
-	if err != nil {
-		log.Println(err)
-	}
-	metric, err = getCampaignMetrics(metric, target, token)
-	if err != nil {
-		log.Println(err)
+	c := make(chan bool, 3)
+	go getPromoMetrics(&metric, target, token, c)
+	go getCouponMetrics(&metric, target, token, c)
+	go getCampaignMetrics(&metric, target, token, c)
+
+	for i := 0; i < 3; i++ {
+		<-c
 	}
 	metric.Site = target
 	return metric

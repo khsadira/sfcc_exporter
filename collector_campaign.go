@@ -9,24 +9,18 @@ import (
 	"net/http"
 )
 
-func getCampaignMetrics(metric Metrics, target string, token string) (Metrics, error) {
+func getCampaignMetrics(metric *Metrics, target string, token string, c chan bool) {
 
-	bufTrue, err := getCampaignJSON(target, token, "true")
-	if err != nil {
-		return metric, err
-	}
-	bufFalse, err := getCampaignJSON(target, token, "false")
-	if err != nil {
-		return metric, err
-	}
+	bufTrue, _ := getCampaignJSON(target, token, "true")
+	bufFalse, _ := getCampaignJSON(target, token, "false")
 	var scan Scan
 
 	json.Unmarshal(bufTrue, &scan)
-	metric.CampaignEnable = scan.Total
+	(*metric).CampaignEnable = scan.Total
 
 	json.Unmarshal(bufFalse, &scan)
-	metric.CampaignDisable = scan.Total
-	return metric, nil
+	(*metric).CampaignDisable = scan.Total
+	c <- true
 }
 
 func getCampaignJSON(target string, token string, search string) ([]byte, error) {

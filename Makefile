@@ -10,6 +10,7 @@ FILE	=	main.go\
 			type_struct.go\
 			collector_promotion.go\
 			get_token.go\
+			get_sfcc_metrics.go\
 			collector_coupon.go
 
 DOCKER_IMAGE_NAME       ?= sfcc_exporter

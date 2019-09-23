@@ -9,24 +9,18 @@ import (
 	"net/http"
 )
 
-func getCouponMetrics(metric Metrics, target string, token string) (Metrics, error) {
+func getCouponMetrics(metric *Metrics, target string, token string, c chan bool) {
 
-	bufTrue, err := getCouponJSON(target, token, "true")
-	if err != nil {
-		return metric, err
-	}
-	bufFalse, err := getCouponJSON(target, token, "false")
-	if err != nil {
-		return metric, err
-	}
+	bufTrue, _ := getCouponJSON(target, token, "true")
+	bufFalse, _ := getCouponJSON(target, token, "false")
 	var scan Scan
 
 	json.Unmarshal(bufTrue, &scan)
-	metric.CouponEnable = scan.Total
+	(*metric).CouponEnable = scan.Total
 
 	json.Unmarshal(bufFalse, &scan)
-	metric.CouponDisable = scan.Total
-	return metric, nil
+	(*metric).CouponDisable = scan.Total
+	c <- true
 }
 
 func getCouponJSON(target string, token string, search string) ([]byte, error) {

@@ -9,24 +9,18 @@ import (
 	"net/http"
 )
 
-func getPromoMetrics(metric Metrics, target string, token string) (Metrics, error) {
+func getPromoMetrics(metric *Metrics, target string, token string, c chan bool) {
 
-	bufTrue, err := getPromoJSON(target, token, "true")
-	if err != nil {
-		return metric, err
-	}
-	bufFalse, err := getPromoJSON(target, token, "false")
-	if err != nil {
-		return metric, err
-	}
+	bufTrue, _ := getPromoJSON(target, token, "true")
+	bufFalse, _ := getPromoJSON(target, token, "false")
 	var scan Scan
 
 	json.Unmarshal(bufTrue, &scan)
-	metric.PromotionEnable = scan.Total
+	(*metric).PromotionEnable = scan.Total
 
 	json.Unmarshal(bufFalse, &scan)
-	metric.PromotionDisable = scan.Total
-	return metric, nil
+	(*metric).PromotionDisable = scan.Total
+	c <- true
 }
 
 func getPromoJSON(target string, token string, search string) ([]byte, error) {
