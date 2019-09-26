@@ -25,6 +25,7 @@ func metricsToByte(metrics []Metrics) []byte {
 	var promoTotal, promoEnable, promoDisable string
 	var couponTotal, couponEnable, couponDisable string
 	var campaignTotal, campaignEnable, campaignDisable string
+	var orderComplete string
 
 	for _, metric := range metrics {
 		//PROMO_VAR
@@ -41,9 +42,13 @@ func metricsToByte(metrics []Metrics) []byte {
 		campaignTotal += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameCampaignTotal, metric.Site, metric.CampaignEnable+metric.CampaignDisable)
 		campaignEnable += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameCampaignEnable, metric.Site, metric.CampaignEnable)
 		campaignDisable += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameCampaignDisable, metric.Site, metric.CampaignDisable)
+
+		//ORDER_VAR
+		orderComplete += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameOrderComplete, metric.Site, metric.OrderComplete)
 	}
 	resp = fmt.Sprintf("%s\n%s\n%s%s\n%s\n%s%s\n%s\n%s", helpPromoTotal, typePromoTotal, promoTotal, helpPromoEnable, typePromoEnable, promoEnable, helpPromoDisable, typePromoDisable, promoDisable)
 	resp += fmt.Sprintf("%s\n%s\n%s%s\n%s\n%s%s\n%s\n%s", helpCouponTotal, typeCouponTotal, couponTotal, helpCouponEnable, typeCouponEnable, couponEnable, helpCouponDisable, typeCouponDisable, couponDisable)
 	resp += fmt.Sprintf("%s\n%s\n%s%s\n%s\n%s%s\n%s\n%s", helpCampaignTotal, typeCampaignTotal, campaignTotal, helpCampaignEnable, typeCampaignEnable, campaignEnable, helpCampaignDisable, typeCampaignDisable, campaignDisable)
+	resp += fmt.Sprintf("%s\n%s\n%s", helpOrderComplete, typeOrderComplete, orderComplete)
 	return []byte(resp)
 }

@@ -36,4 +36,10 @@ const (
 	typeCampaignDisable = "# TYPE " + nameCampaignDisable + " gauge"
 	helpCampaignTotal   = "# HELP " + nameCampaignTotal + " Total number of campaigns"
 	typeCampaignTotal   = "# TYPE " + nameCampaignTotal + " gauge"
+
+	//ORDER VAR
+	nameOrder         = "sfcc_orders"
+	nameOrderComplete = nameOrder + "_completed"
+	helpOrderComplete = "# HELP " + nameOrderComplete + " Number of orders completed"
+	typeOrderComplete = "# TYPE " + nameOrderComplete + " gauge"
 )

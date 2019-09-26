@@ -8,6 +8,7 @@ type Metrics struct {
 	CouponDisable    int
 	CampaignEnable   int
 	CampaignDisable  int
+	OrderComplete    int
 }
 
 type Scan struct {
