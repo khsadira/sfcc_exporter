@@ -25,7 +25,7 @@ func getCouponMetrics(metric *Metrics, target string, token string, c chan bool)
 
 func getCouponJSON(target string, token string, search string) ([]byte, error) {
 	client := &http.Client{}
-	jsBody := fmt.Sprintf(`{"query":{"text_query":{"fields":["enabled"],"search_phrase":"%s"}},"select" : "(**)"}`, search)
+	jsBody := fmt.Sprintf(`{"query":{"text_query":{"fields":["enabled"],"search_phrase":"%s"}},"select":"(**)","count":1}`, search)
 	jsonBody := []byte(jsBody)
 	query := fmt.Sprintf("%s/s/-/dw/data/v19_8/sites/%s/coupon_search", hostname, target)
 	req, err := http.NewRequest("POST", query, bytes.NewBuffer(jsonBody))

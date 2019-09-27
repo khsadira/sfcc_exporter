@@ -21,7 +21,7 @@ func getOrderMetrics(metric *Metrics, target string, token string, c chan bool) 
 
 func getOrderJSON(target string, token string, search string) ([]byte, error) {
 	client := &http.Client{}
-	jsBody := fmt.Sprintf(`{"query":{"text_query":{"fields":["export_status"],"search_phrase":"%s"}},"select" : "(**)"}`, search)
+	jsBody := fmt.Sprintf(`{"query":{"text_query":{"fields":["export_status"],"search_phrase":"%s"}},"select":"(**)","count":1}`, search)
 	jsonBody := []byte(jsBody)
 	query := fmt.Sprintf("%s/s/%s/dw/shop/v19_8/order_search", hostname, target)
 	req, err := http.NewRequest("POST", query, bytes.NewBuffer(jsonBody))
