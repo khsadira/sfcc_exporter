@@ -40,8 +40,11 @@ const (
 	typeCampaignTotal   = "# TYPE " + nameCampaignTotal + " gauge"
 
 	//ORDER VAR
-	nameOrder         = "sfcc_orders"
-	nameOrderComplete = nameOrder + "_completed"
-	helpOrderComplete = "# HELP " + nameOrderComplete + " Number of orders completed"
-	typeOrderComplete = "# TYPE " + nameOrderComplete + " gauge"
+	nameOrder              = "sfcc_orders"
+	nameOrderComplete      = nameOrder + "_completed"
+	helpOrderComplete      = "# HELP " + nameOrderComplete + " Number of orders completed"
+	typeOrderComplete      = "# TYPE " + nameOrderComplete + " gauge"
+	nameOrderCompleteToday = nameOrder + "_today_completed"
+	helpOrderCompleteToday = "# HELP " + nameOrderCompleteToday + " Number of orders completed today"
+	typeOrderCompleteToday = "# TYPE " + nameOrderCompleteToday + " gauge"
 )

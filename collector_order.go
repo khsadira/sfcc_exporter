@@ -22,7 +22,7 @@ func getOrderMetrics(metric *Metrics, target string, token string, c chan bool) 
 
 	total := findNbOrderToday(jsOrders, 0, 200, scan.Total, target, token)
 	metric.OrderComplete = scan.Total
-	metric.OrderCompleteDay = total
+	metric.OrderCompleteToday = total
 
 	c <- true
 }
@@ -56,15 +56,11 @@ func findNbOrderToday(scan JsOrders, start int, count int, total int, target str
 
 	t := time.Now()
 	date := t.Format(time.RFC3339)[:10]
-	println(date)
 	for _, a := range scan.Hits {
-		//println(a.Data.LastModified)
 		s := a.Data.LastModified[:10]
-		println(s)
 		if s == date {
 			ret += 1
 			last = true
-			println("YES")
 		} else {
 			last = false
 		}
