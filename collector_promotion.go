@@ -27,7 +27,7 @@ func getPromoJSON(target string, token string, search string) ([]byte, error) {
 	client := &http.Client{}
 	jsBody := fmt.Sprintf(`{"query":{"text_query":{"fields":["enabled"],"search_phrase":"%s"}},"select" : "(**)"}`, search)
 	jsonBody := []byte(jsBody)
-	query := fmt.Sprintf("https://store-dev.ubi.com/s/-/dw/data/v19_8/sites/%s/promotion_search", target)
+	query := fmt.Sprintf("%s/s/-/dw/data/v19_8/sites/%s/promotion_search", hostname, target)
 	req, err := http.NewRequest("POST", query, bytes.NewBuffer(jsonBody))
 	req.Header.Add("Authorization", "Bearer "+token)
 	req.Header.Add("Content-Type", "application/json")

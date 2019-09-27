@@ -23,7 +23,7 @@ func getOrderJSON(target string, token string, search string) ([]byte, error) {
 	client := &http.Client{}
 	jsBody := fmt.Sprintf(`{"query":{"text_query":{"fields":["export_status"],"search_phrase":"%s"}},"select" : "(**)"}`, search)
 	jsonBody := []byte(jsBody)
-	query := fmt.Sprintf("https://store-dev.ubi.com/s/%s/dw/shop/v19_8/order_search", target)
+	query := fmt.Sprintf("%s/s/%s/dw/shop/v19_8/order_search", hostname, target)
 	req, err := http.NewRequest("POST", query, bytes.NewBuffer(jsonBody))
 	req.Header.Add("Authorization", "Bearer "+token)
 	req.Header.Add("Content-Type", "application/json")

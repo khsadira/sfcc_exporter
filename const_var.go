@@ -1,6 +1,8 @@
 package main
 
 const (
+	hostname = "https://store-dev.ubi.com"
+
 	//PROMOTION VAR
 	namePromo        = "sfcc_promotions"
 	namePromoEnable  = namePromo + "_enabled"
