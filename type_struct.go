@@ -9,8 +9,18 @@ type Metrics struct {
 	CampaignEnable   int
 	CampaignDisable  int
 	OrderComplete    int
+	OrderCompleteDay int
 }
 
 type Scan struct {
 	Total int `json:"total"`
+	Count int `json:"count"`
+}
+
+type JsOrders struct {
+	Hits []struct {
+		Data struct {
+			LastModified string `json:"last_modified"`
+		} `json:"data"`
+	} `json:"hits"`
 }
