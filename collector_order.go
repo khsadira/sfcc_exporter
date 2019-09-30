@@ -65,7 +65,7 @@ func findNbOrderToday(scan JsOrders, start int, count int, total int, target str
 			last = false
 		}
 	}
-	if last == false && total > start+count {
+	if last == true && total > start+count {
 		//find next 200 by start
 		var jsOrders JsOrders
 
