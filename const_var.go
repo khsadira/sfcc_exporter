@@ -1,7 +1,7 @@
 package main
 
 const (
-	hostname = "https://store-dev.ubi.com"
+	hostname = "https://store.ubi.com"
 
 	//PROMOTION VAR
 	namePromo        = "sfcc_promotions"
@@ -40,11 +40,12 @@ const (
 	typeCampaignTotal   = "# TYPE " + nameCampaignTotal + " gauge"
 
 	//ORDER VAR
-	nameOrder              = "sfcc_orders"
-	nameOrderComplete      = nameOrder + "_completed"
-	helpOrderComplete      = "# HELP " + nameOrderComplete + " Number of orders completed"
-	typeOrderComplete      = "# TYPE " + nameOrderComplete + " gauge"
-	nameOrderCompleteToday = nameOrder + "_today_completed"
-	helpOrderCompleteToday = "# HELP " + nameOrderCompleteToday + " Number of orders completed today"
+	nameOrder         = "sfcc_orders"
+	nameOrderComplete = nameOrder + "_completed"
+	helpOrderComplete = "# HELP " + nameOrderComplete + " Number of orders completed"
+	typeOrderComplete = "# TYPE " + nameOrderComplete + " gauge"
+
+	nameOrderCompleteToday = nameOrder + "_lastfive_completed"
+	helpOrderCompleteToday = "# HELP " + nameOrderCompleteToday + " Number of orders completed in the last five minutes"
 	typeOrderCompleteToday = "# TYPE " + nameOrderCompleteToday + " gauge"
 )

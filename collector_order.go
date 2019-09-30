@@ -10,8 +10,6 @@ import (
 	"time"
 )
 
-
-
 func getOrderMetrics(metric *Metrics, target string, token string, c chan bool) {
 	var scan Scan
 	var jsOrders JsOrders
@@ -20,7 +18,7 @@ func getOrderMetrics(metric *Metrics, target string, token string, c chan bool) 
 	json.Unmarshal(bufExported, &scan)
 	json.Unmarshal(bufExported, &jsOrders)
 
-	total := findNbOrderToday(jsOrders, 0, 200, scan.Total, target, token)
+	total := findNbOrderLastFiveMin(jsOrders, 0, 200, scan.Total, target, token)
 	metric.OrderComplete = scan.Total
 	metric.OrderCompleteToday = total
 
@@ -49,16 +47,15 @@ func getOrderJSON(target string, token string, search string, start int) ([]byte
 	return buf, nil
 }
 
-func findNbOrderToday(scan JsOrders, start int, count int, total int, target string, token string) int {
+func findNbOrderLastFiveMin(scan JsOrders, start int, count int, total int, target string, token string) int {
 
 	var ret int
 	var last  bool
 
-	t := time.Now()
-	date := t.Format(time.RFC3339)[:10]
+	date := time.Now().Unix() - (5 * 60)
 	for _, a := range scan.Hits {
-		s := a.Data.LastModified[:10]
-		if s == date {
+		s, _ := time.Parse(time.RFC3339, a.Data.LastModified)
+		if s.Unix() >= date {
 			ret += 1
 			last = true
 		} else {
@@ -72,7 +69,7 @@ func findNbOrderToday(scan JsOrders, start int, count int, total int, target str
 		start += count
 		bufExported, _ := getOrderJSON(target, token, "exported", start)
 		json.Unmarshal(bufExported, &jsOrders)
-		ret += findNbOrderToday(jsOrders, start, count, total, target, token)
+		ret += findNbOrderLastFiveMin(jsOrders, start, count, total, target, token)
 	}
 	return ret
 }
