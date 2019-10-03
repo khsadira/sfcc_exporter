@@ -3,9 +3,18 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 )
 
+var hostname string
+
 func main() {
+
+	hostname = os.Getenv("API_URL")
+
+	if hostname == "" {
+		log.Fatal("Please enter hostname website")
+	}
 	http.HandleFunc("/metrics/", metricsPage)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(`<html>

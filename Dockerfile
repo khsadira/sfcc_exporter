@@ -2,6 +2,7 @@
 
 # Start from the latest golang base image
 FROM golang:latest
+ENV API_URL="https://store.ubi.com"
 
 # Add Maintainer Info
 LABEL maintainer="Khan Sadirac <khan.sadirac42@gmail.com"
