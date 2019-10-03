@@ -10,7 +10,7 @@ var hostname string
 
 func main() {
 
-	hostname = os.Getenv("API_URL")
+	hostname = os.Getenv("API_URL_SFCC")
 
 	if hostname == "" {
 		log.Fatal("Please enter hostname website")
