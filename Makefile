@@ -2,7 +2,6 @@ NAME	:=	sfcc_exporter
 GO		:=	go
 FMT		=	gofmt
 pkgs	=	$(shell env GO111MODULE=on $(GO) list -m)
-API_URL =	https://store.ubi.com
 
 FILE	=	main.go\
 			metrics_module.go\
