@@ -13,6 +13,10 @@ func getMetricsSFCC(query []string) []byte {
 		log.Println(err)
 		return []byte("Access token wasn't generated")
 	}
+	sites := getSiteMetrics(token)
+	for _, site := range sites {
+		println(site)
+	}
 	for _, target := range query {
 		metrics = append(metrics, fillMetrics(target, token))
 	}

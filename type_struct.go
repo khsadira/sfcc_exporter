@@ -24,3 +24,12 @@ type JsOrders struct {
 		} `json:"data"`
 	} `json:"hits"`
 }
+
+type Sites struct {
+	Data []struct {
+		Type string `json:"_type"`
+		ID   string `json:"id"`
+	} `json:"data"`
+	Total int `json:"total"`
+	Count int `json:"count"`
+}
