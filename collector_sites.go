@@ -8,11 +8,11 @@ import (
 	"net/http"
 )
 
-func getSiteMetrics(token string) []string {
+func getSiteMetrics(token string) ([]string, int) {
 	var sites []string
 
 	sites = findSites(sites, token, 0, 200)
-	return sites
+	return sites, len(sites)
 }
 
 func findSites(sites []string, token string, start int, count int) []string {

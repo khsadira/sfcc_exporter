@@ -1,6 +1,7 @@
 package main
 
 const (
+	VAL = 200
 	//PROMOTION VAR
 	namePromo        = "sfcc_promotions"
 	namePromoEnable  = namePromo + "_enabled"

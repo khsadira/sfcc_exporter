@@ -5,33 +5,42 @@ import (
 	"log"
 )
 
-func getMetricsSFCC(query []string) []byte {
-	var metrics []Metrics
+func getMetricsSFCC() []byte {
+	//	var metrics []Metrics
 
 	token, err := getToken("CLIENT_ID_SFCC", "CLIENT_PW_SFCC")
 	if err != nil {
 		log.Println(err)
 		return []byte("Access token wasn't generated")
 	}
-	sites := getSiteMetrics(token)
-	for _, site := range sites {
-		println(site)
+	sites, len := getSiteMetrics(token)
+	var met [VAL]Metrics
+	b := make(chan int, len)
+	for i, target := range sites {
+		//	metrics = append(metrics, fillMetrics(target, token))
+		go func(metrics *Metrics, target string, token string, b chan int) {
+			*(metrics) = fillMetrics(target, token)
+			b <- 1
+		}(&met[i], target, token, b)
 	}
-	for _, target := range query {
-		metrics = append(metrics, fillMetrics(target, token))
+	for i := 0; i < len; i++ {
+		<-b
 	}
-	resp := metricsToByte(metrics)
-	return (resp)
+	resp := metricsToByte(met, len)
+	return resp
 }
 
-func metricsToByte(metrics []Metrics) []byte {
+func metricsToByte(metrics [VAL]Metrics, len int) []byte {
 	var resp string
 	var promoTotal, promoEnable, promoDisable string
 	var couponTotal, couponEnable, couponDisable string
 	var campaignTotal, campaignEnable, campaignDisable string
 	var orderComplete, orderCompleteToday string
 
-	for _, metric := range metrics {
+	for i, metric := range metrics {
+		if i == len {
+			break
+		}
 		//PROMO_VAR
 		promoTotal += fmt.Sprintf("%s{site=\"%s\"} %v\n", namePromoTotal, metric.Site, metric.PromotionEnable+metric.PromotionDisable)
 		promoEnable += fmt.Sprintf("%s{site=\"%s\"} %v\n", namePromoEnable, metric.Site, metric.PromotionEnable)
