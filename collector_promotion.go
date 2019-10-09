@@ -16,10 +16,10 @@ func getPromoMetrics(metric *Metrics, target string, token string, c chan bool) 
 	var scan Scan
 
 	json.Unmarshal(bufTrue, &scan)
-	(*metric).PromotionEnable = scan.Total
+	(*metric).PromoEnable = scan.Total
 
 	json.Unmarshal(bufFalse, &scan)
-	(*metric).PromotionDisable = scan.Total
+	(*metric).PromoDisable = scan.Total
 	c <- true
 }
 

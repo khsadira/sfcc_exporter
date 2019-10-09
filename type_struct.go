@@ -1,15 +1,15 @@
 package main
 
 type Metrics struct {
-	Site               string
-	PromotionEnable    int
-	PromotionDisable   int
-	CouponEnable       int
-	CouponDisable      int
-	CampaignEnable     int
-	CampaignDisable    int
-	OrderComplete      int
-	OrderCompleteToday int
+	Site                  string
+	PromoEnable           int
+	PromoDisable          int
+	CouponEnable          int
+	CouponDisable         int
+	CampaignEnable        int
+	CampaignDisable       int
+	OrderComplete         int
+	OrderCompleteLastFive int
 }
 
 type Scan struct {

@@ -20,7 +20,7 @@ func getOrderMetrics(metric *Metrics, target string, token string, c chan bool) 
 
 	total := findNbOrderLastFiveMin(jsOrders, 0, 200, scan.Total, target, token)
 	metric.OrderComplete = scan.Total
-	metric.OrderCompleteToday = total
+	metric.OrderCompleteLastFive = total
 
 	c <- true
 }

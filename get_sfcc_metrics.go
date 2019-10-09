@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 )
 
@@ -35,36 +34,49 @@ func metricsToByte(metrics [VAL]Metrics, len int) []byte {
 	var promoTotal, promoEnable, promoDisable string
 	var couponTotal, couponEnable, couponDisable string
 	var campaignTotal, campaignEnable, campaignDisable string
-	var orderComplete, orderCompleteToday string
+	var orderComplete, orderCompleteLastFive string
 
 	for i, metric := range metrics {
 		if i == len {
 			break
 		}
 		//PROMO_VAR
-		promoTotal += fmt.Sprintf("%s{site=\"%s\"} %v\n", namePromoTotal, metric.Site, metric.PromotionEnable+metric.PromotionDisable)
-		promoEnable += fmt.Sprintf("%s{site=\"%s\"} %v\n", namePromoEnable, metric.Site, metric.PromotionEnable)
-		promoDisable += fmt.Sprintf("%s{site=\"%s\"} %v\n", namePromoDisable, metric.Site, metric.PromotionDisable)
+		promoTotal += promMetrics(namePromoTotal, metric.Site, metric.PromoEnable+metric.PromoDisable)
+		promoEnable += promMetrics(namePromoEnable, metric.Site, metric.PromoEnable)
+		promoDisable += promMetrics(namePromoDisable, metric.Site, metric.PromoDisable)
 
 		//COUPON_VAR
-		couponTotal += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameCouponTotal, metric.Site, metric.CouponEnable+metric.CouponDisable)
-		couponEnable += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameCouponEnable, metric.Site, metric.CouponEnable)
-		couponDisable += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameCouponDisable, metric.Site, metric.CouponDisable)
+		couponTotal += promMetrics(nameCouponTotal, metric.Site, metric.CouponEnable+metric.CouponDisable)
+		couponEnable += promMetrics(nameCouponEnable, metric.Site, metric.CouponEnable)
+		couponDisable += promMetrics(nameCouponDisable, metric.Site, metric.CouponDisable)
 
 		//CAMPAIGN_VAR
-		campaignTotal += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameCampaignTotal, metric.Site, metric.CampaignEnable+metric.CampaignDisable)
-		campaignEnable += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameCampaignEnable, metric.Site, metric.CampaignEnable)
-		campaignDisable += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameCampaignDisable, metric.Site, metric.CampaignDisable)
+		campaignTotal += promMetrics(nameCampaignTotal, metric.Site, metric.CampaignEnable+metric.CampaignDisable)
+		campaignEnable += promMetrics(nameCampaignEnable, metric.Site, metric.CampaignEnable)
+		campaignDisable += promMetrics(nameCampaignDisable, metric.Site, metric.CampaignDisable)
 
 		//ORDER_VAR
-		orderComplete += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameOrderComplete, metric.Site, metric.OrderComplete)
-		orderCompleteToday += fmt.Sprintf("%s{site=\"%s\"} %v\n", nameOrderCompleteToday, metric.Site, metric.OrderCompleteToday)
-
+		orderComplete += promMetrics(nameOrderComplete, metric.Site, metric.OrderComplete)
+		orderCompleteLastFive += promMetrics(nameOrderCompleteLastFive, metric.Site, metric.OrderCompleteLastFive)
 	}
-	resp = fmt.Sprintf("%s\n%s\n%s%s\n%s\n%s%s\n%s\n%s", helpPromoTotal, typePromoTotal, promoTotal, helpPromoEnable, typePromoEnable, promoEnable, helpPromoDisable, typePromoDisable, promoDisable)
-	resp += fmt.Sprintf("%s\n%s\n%s%s\n%s\n%s%s\n%s\n%s", helpCouponTotal, typeCouponTotal, couponTotal, helpCouponEnable, typeCouponEnable, couponEnable, helpCouponDisable, typeCouponDisable, couponDisable)
-	resp += fmt.Sprintf("%s\n%s\n%s%s\n%s\n%s%s\n%s\n%s", helpCampaignTotal, typeCampaignTotal, campaignTotal, helpCampaignEnable, typeCampaignEnable, campaignEnable, helpCampaignDisable, typeCampaignDisable, campaignDisable)
-	resp += fmt.Sprintf("%s\n%s\n%s", helpOrderComplete, typeOrderComplete, orderComplete)
-	resp += fmt.Sprintf("%s\n%s\n%s", helpOrderCompleteToday, typeOrderCompleteToday, orderCompleteToday)
+	//PROMO_RESP
+	resp += promDesc(namePromoTotal, "Total numbers of promotions", "gauge", promoTotal)
+	resp += promDesc(namePromoEnable, "Numbers of promotions enabled", "gauge", promoEnable)
+	resp += promDesc(namePromoDisable, "Numbers of promotions disabled", "gauge", promoDisable)
+
+	//COUPON_RESP
+	resp += promDesc(nameCouponTotal, "Total numbers of coupons", "gauge", couponTotal)
+	resp += promDesc(nameCouponEnable, "Numbers of coupons enabled", "gauge", couponEnable)
+	resp += promDesc(nameCouponDisable, "Numbers of coupons disabled", "gauge", couponDisable)
+
+	//CAMPAIGN_RESP
+	resp += promDesc(nameCampaignTotal, "Total numbers of campaigns", "gauge", campaignTotal)
+	resp += promDesc(nameCampaignEnable, "Numbers of campaigns enabled", "gauge", campaignEnable)
+	resp += promDesc(nameCampaignDisable, "Numbers of campaigns disabled", "gauge", campaignDisable)
+
+	//ORDER_RESP
+	resp += promDesc(nameOrderComplete, "Numbers of orders completed", "gauge", orderComplete)
+	resp += promDesc(nameOrderCompleteLastFive, "Numbers of orders completed since five minutes", "gauge", orderCompleteLastFive)
+
 	return []byte(resp)
 }
