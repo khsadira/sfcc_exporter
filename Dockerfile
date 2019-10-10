@@ -1,22 +1,13 @@
-# Dockerfile References: https://docs.docker.com/engine/reference/builder/
-
-# Start from the latest golang base image
-FROM golang:latest
-
-# Add Maintainer Info
+#builder container
+FROM golang:1.12-alpine as builder
 LABEL maintainer="Khan Sadirac <khan.sadirac42@gmail.com"
-
-# Set the Current Working Directory inside the container
 WORKDIR /app
-
-# Copy the source from the current directory to the Working Directory inside the container
-COPY . /app
-
-# Build the Go app
+COPY . .
 RUN go build -o sfcc_exporter
 
-# Expose port 9240 to the outside world
+# main container
+FROM alpine:latest
+WORKDIR /root/
+COPY --from=builder /app .
 EXPOSE 9240
-
-# Command to run the executable
 CMD ["./sfcc_exporter"]
