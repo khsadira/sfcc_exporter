@@ -1,7 +1,7 @@
 package main
 
 const (
-	VAL = 100
+	VAL = 200
 
 
 	//PROMOTION VAR
