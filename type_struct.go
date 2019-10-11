@@ -1,5 +1,9 @@
 package main
 
+type Token struct {
+	AccessToken string `json:"access_token"`
+}
+
 type Metrics struct {
 	Site                  string
 	PromoEnable           int
